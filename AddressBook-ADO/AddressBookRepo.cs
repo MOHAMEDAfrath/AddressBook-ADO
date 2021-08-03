@@ -201,5 +201,26 @@ namespace AddressBook_ADO
             }
             return contacts.Count;
         }
+        public List<int> PrintCountBasedOnCityAndStateName()
+        {
+            List<int> number = new List<int>();
+            //query to be executed
+            string query = @"select count(*) from address_book_table group by City,State";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    number.Add(Convert.ToInt32(sqlDataReader[0]));
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return number;
+        }
     }
 }

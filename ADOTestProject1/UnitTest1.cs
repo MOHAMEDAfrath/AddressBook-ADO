@@ -1,5 +1,6 @@
 using AddressBook_ADO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace ADOTestProject1
 {
@@ -21,24 +22,24 @@ namespace ADOTestProject1
             Assert.AreEqual(expected, actual);
         }
         //Insert into table
-        //[TestMethod]
-        //public void TestMethodInsertIntoTable()
-        //{
-        //    AddressBook addressBook = new AddressBook();
-        //    addressBook.FirstName = "Mohd";
-        //    addressBook.LastName = "Aadil";
-        //    addressBook.Address = "Hello Street";
-        //    addressBook.City = "Chennai";
-        //    addressBook.State = "TamilNadu";
-        //    addressBook.ZipCode = "7874152";
-        //    addressBook.PhoneNumber = "7412587845";
-        //    addressBook.email = "abcd@gmail.com";
-        //    addressBook.addressBookName = "Collegue";
-        //    addressBook.addressBookType = "Friends";
-        //    int actual = addressBookRepo.InsertIntoTable(addressBook);
-        //    int expected = 1;
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestMethod]
+        public void TestMethodInsertIntoTable()
+        {
+            AddressBook addressBook = new AddressBook();
+            addressBook.FirstName = "Mohd";
+            addressBook.LastName = "Aadil";
+            addressBook.Address = "Hello Street";
+            addressBook.City = "Chennai";
+            addressBook.State = "TamilNadu";
+            addressBook.ZipCode = "7874152";
+            addressBook.PhoneNumber = "7412587845";
+            addressBook.email = "abcd@gmail.com";
+            addressBook.addressBookName = "Collegue";
+            addressBook.addressBookType = "Friends";
+            int actual = addressBookRepo.InsertIntoTable(addressBook);
+            int expected = 1;
+            Assert.AreEqual(expected, actual);
+        }
         //Modify data
         [TestMethod]
         public void TestMethodToCheckModify()
@@ -63,12 +64,21 @@ namespace ADOTestProject1
             int expected = 1;
             Assert.AreEqual(expected, actual);
         }
+        //Prints based on city name
         [TestMethod]
         public void PrintContactBasedOnCityName()
         {
             int actual = addressBookRepo.PrintDataBasedOnCity("Chennai");
             int expected =3;
             Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void PrintCountBasedOnCityAndState()
+        {
+            List<int> actual = addressBookRepo.PrintCountBasedOnCityAndStateName();
+            int[] temp = { 1, 1, 3, 1 };
+            var expected = new List<int>(temp);
+            CollectionAssert.AreEqual(actual, expected);
         }
     }
 }
