@@ -260,5 +260,105 @@ namespace AddressBook_ADO
             return types;
 
         }
+        ////
+        ///
+        ////////////After ER////////////
+        ///Tables are contact_list,address_book_type,contact_map_type
+        ///
+        ///
+        public AddressBook GetDetailAfterER(SqlDataReader sqlDataReader)
+        {
+
+            AddressBook addressBook = new AddressBook();
+            addressBook.FirstName = Convert.ToString(sqlDataReader["FirstName"]);
+            addressBook.LastName = Convert.ToString(sqlDataReader["LastName"]);
+            addressBook.Address = Convert.ToString(sqlDataReader["Address"] + " " + sqlDataReader["City"] + " " + sqlDataReader["State"] + " " + sqlDataReader["ZipCode"]);
+            addressBook.PhoneNumber = Convert.ToString(sqlDataReader["PhoneNumber"]);
+            addressBook.email = Convert.ToString(sqlDataReader["email"]);
+            addressBook.addressBookName = Convert.ToString(sqlDataReader["AddressBookName"]);
+            Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5} ", addressBook.FirstName, addressBook.LastName, addressBook.Address, addressBook.PhoneNumber, addressBook.email, addressBook.addressBookName);
+            return addressBook;
+
+        }
+        public int PrintDataBasedOnCityAfterER(string city)
+        {
+            List<AddressBook> contacts = new List<AddressBook>();
+            AddressBook addressBook = new AddressBook();
+            //query to be executed
+            string query = @"select contact_list.ContactId,contact_list.FirstName,contact_list.LastName,contact_list.Address,contact_list.City,contact_list.State,contact_list.ZipCode,contact_list.PhoneNumber,contact_list.email, contact_list.AddressBookName from contact_list where City ='"+city+"'";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    addressBook = GetDetailAfterER(sqlDataReader);
+                    contacts.Add(addressBook);
+                }
+            }
+            return contacts.Count;
+        }
+        public List<int> PrintCountBasedOnCityAndStateNameAfterER()
+        {
+            List<int> number = new List<int>();
+            //query to be executed
+            string query = @"select count(*) from contact_list group by city";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    //add number of person based on count to the list
+                    number.Add(Convert.ToInt32(sqlDataReader[0]));
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return number;
+        }
+        public List<string> PrintSortedNameBasedOnCityAfterER(string city)
+        {
+            List<string> names = new List<string>();
+            //query to be executed
+            string query = @"select FirstName from contact_list where City =" + "'" + city + "' order by FirstName";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    //add number of person based on count to the list
+                    names.Add(Convert.ToString(sqlDataReader[0]));
+                }
+            }
+            return names;
+        }
+        public List<int> PrintCountBasedOnAddressBookTypeAfterER()
+        {
+            List<int> types = new List<int>();
+            //query to be executed
+            string query = @"select count(*) as noofcontacts,address_book_type.AddressBookType from contact_list inner join contact_map_type on contact_list.ContactId = contact_map_type.contactId inner join address_book_type on contact_map_type.typeId = address_book_type.TypeId group by address_book_type.AddressBookType";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    //add number of person based on count to the list
+                    types.Add(Convert.ToInt32(sqlDataReader[0]));
+                }
+            }
+            return types;
+
+        }
+
+
     }
 }

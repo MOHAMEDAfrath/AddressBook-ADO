@@ -21,7 +21,7 @@ namespace ADOTestProject1
             int expected = 5;
             Assert.AreEqual(expected, actual);
         }
-       // Insert into table
+        // Insert into table
         [TestMethod]
         public void TestMethodInsertIntoTable()
         {
@@ -99,5 +99,41 @@ namespace ADOTestProject1
             var expected = new List<int>(temp);
             CollectionAssert.AreEqual(actual, expected);
         }
+        /// <summary>
+        /// Test cases after ER
+        /// Repeating the above test cases after ER
+        /// </summary>
+        [TestMethod]
+        public void PrintContactBasedOnCityNameAfterER()
+        {
+            int actual = addressBookRepo.PrintDataBasedOnCityAfterER("Chennai");
+            int expected = 2;
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void PrintCountBasedOnCityAndStateAfterER()
+        {
+            List<int> actual = addressBookRepo.PrintCountBasedOnCityAndStateNameAfterER();
+            int[] temp = { 1, 2, 1};
+            var expected = new List<int>(temp);
+            CollectionAssert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void SortBasedOnNameGivenCityAfterER()
+        {
+            List<string> actual = addressBookRepo.PrintSortedNameBasedOnCityAfterER("Chennai");
+            string[] temp = { "Amir", "Ram" };
+            var expected = new List<string>(temp);
+            CollectionAssert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void TestMethodPrintCountBasedOnTypeAfterER()
+        {
+            List<int> actual = addressBookRepo.PrintCountBasedOnAddressBookTypeAfterER();
+            int[] temp = {1, 3, 2 };
+            var expected = new List<int>(temp);
+            CollectionAssert.AreEqual(actual, expected);
+        }
+
     }
 }
