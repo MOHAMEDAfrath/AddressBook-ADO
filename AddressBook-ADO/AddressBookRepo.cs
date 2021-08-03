@@ -213,6 +213,7 @@ namespace AddressBook_ADO
             {
                 while (sqlDataReader.Read())
                 {
+                    //add number of person based on count to the list
                     number.Add(Convert.ToInt32(sqlDataReader[0]));
                 }
             }
