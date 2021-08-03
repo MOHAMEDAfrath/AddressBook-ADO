@@ -17,7 +17,7 @@ namespace ADOTestProject1
         public void TestMethodGetContactCount()
         {
             int actual = addressBookRepo.GetContactDetails();
-            int expected = 8;
+            int expected = 6;
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
@@ -35,6 +35,18 @@ namespace ADOTestProject1
             addressBook.addressBookName = "Collegue";
             addressBook.addressBookType = "Friends";
             int actual = addressBookRepo.InsertIntoTable(addressBook);
+            int expected = 1;
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void TestMethodToCheckModify()
+        {
+            AddressBook addressBook = new AddressBook();
+            addressBook.FirstName = "xxx";
+            addressBook.LastName = "yyy";
+            addressBook.PhoneNumber = "7412369852";
+            addressBook.email = "xyz@gmail.com";
+            int actual = addressBookRepo.ModifyDetails(addressBook);
             int expected = 1;
             Assert.AreEqual(expected, actual);
         }
