@@ -182,6 +182,24 @@ namespace AddressBook_ADO
             return change;
 
         }
-
+        public int PrintDataBasedOnCity(string city)
+        {
+            List<AddressBook> contacts = new List<AddressBook>();
+            AddressBook addressBook = new AddressBook();
+            //query to be executed
+            string query = @"select * from address_book_table where City ="+"'"+city+"'";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    addressBook = GetDetail(sqlDataReader);
+                    contacts.Add(addressBook);
+                }
+            }
+            return contacts.Count;
+        }
     }
 }
