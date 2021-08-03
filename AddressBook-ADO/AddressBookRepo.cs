@@ -241,5 +241,24 @@ namespace AddressBook_ADO
             }
             return names;
         } 
+        public List<int> PrintCountBasedOnAddressBookType()
+        {
+            List<int> types = new List<int>();
+            //query to be executed
+            string query = @"select count(*) from address_book_table group by TypeOfAddressBook";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    //add number of person based on count to the list
+                    types.Add(Convert.ToInt32(sqlDataReader[0]));
+                }
+            }
+            return types;
+
+        }
     }
 }

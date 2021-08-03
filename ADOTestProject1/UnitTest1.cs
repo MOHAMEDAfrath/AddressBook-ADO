@@ -21,7 +21,7 @@ namespace ADOTestProject1
             int expected = 5;
             Assert.AreEqual(expected, actual);
         }
-        //Insert into table
+       // Insert into table
         [TestMethod]
         public void TestMethodInsertIntoTable()
         {
@@ -89,6 +89,15 @@ namespace ADOTestProject1
             string[] temp = { "Amir","Ram"};
             var expected = new List<string>(temp);
             CollectionAssert.AreEqual(actual,expected);
+        }
+        //count based on type
+        [TestMethod]
+        public void TestMethodPrintCountBasedOnType()
+        {
+            List<int> actual = addressBookRepo.PrintCountBasedOnAddressBookType();
+            int[] temp = {2,2,1};
+            var expected = new List<int>(temp);
+            CollectionAssert.AreEqual(actual, expected);
         }
     }
 }
