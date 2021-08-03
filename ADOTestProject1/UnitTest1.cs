@@ -18,7 +18,7 @@ namespace ADOTestProject1
         public void TestMethodGetContactCount()
         {
             int actual = addressBookRepo.GetContactDetails();
-            int expected = 6;
+            int expected = 5;
             Assert.AreEqual(expected, actual);
         }
         //Insert into table
@@ -69,16 +69,26 @@ namespace ADOTestProject1
         public void PrintContactBasedOnCityName()
         {
             int actual = addressBookRepo.PrintDataBasedOnCity("Chennai");
-            int expected =3;
+            int expected =2;
             Assert.AreEqual(expected, actual);
         }
+        //Print Count based on city and state
         [TestMethod]
         public void PrintCountBasedOnCityAndState()
         {
             List<int> actual = addressBookRepo.PrintCountBasedOnCityAndStateName();
-            int[] temp = { 1, 1, 3, 1 };
+            int[] temp = { 1, 1, 2, 1 };
             var expected = new List<int>(temp);
             CollectionAssert.AreEqual(actual, expected);
+        }
+        //Checks for sorted name
+        [TestMethod]
+        public void SortBasedOnNameGivenCity()
+        {
+            List<string> actual = addressBookRepo.PrintSortedNameBasedOnCity("Chennai");
+            string[] temp = { "Amir","Ram"};
+            var expected = new List<string>(temp);
+            CollectionAssert.AreEqual(actual,expected);
         }
     }
 }

@@ -223,5 +223,23 @@ namespace AddressBook_ADO
             }
             return number;
         }
+        public List<string> PrintSortedNameBasedOnCity(string city)
+        {
+            List<string> names = new List<string>();
+            //query to be executed
+            string query = @"select FirstName from address_book_table  where City =" + "'" + city + "' order by FirstName";
+            SqlCommand sqlCommand = new SqlCommand(query, this.sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    //add number of person based on count to the list
+                    names.Add(Convert.ToString(sqlDataReader[0]));
+                }
+            }
+            return names;
+        } 
     }
 }
