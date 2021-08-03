@@ -145,6 +145,43 @@ namespace AddressBook_ADO
             return change;
 
         }
+        public int DeletePerson(AddressBook addressBook)
+        {
+            int change = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    //spUdpateEmployeeDetails is stored procedure
+                    SqlCommand sqlCommand = new SqlCommand("spDeleteFromTable", this.sqlConnection);
+                    //setting command type as stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    //sending params 
+                    sqlCommand.Parameters.AddWithValue("@FirstName", addressBook.FirstName);
+                    sqlCommand.Parameters.AddWithValue("@LastName", addressBook.LastName);
+                    sqlConnection.Open();
+                    //returns the number of rows updated
+                    int result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                        change = 1;
+
+                    //close reader
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                //closes the connection
+                sqlConnection.Close();
+
+            }
+            return change;
+
+        }
 
     }
 }

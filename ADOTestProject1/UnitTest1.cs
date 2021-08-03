@@ -20,6 +20,7 @@ namespace ADOTestProject1
             int expected = 6;
             Assert.AreEqual(expected, actual);
         }
+        //Insert into table
         [TestMethod]
         public void TestMethodInsertIntoTable()
         {
@@ -38,6 +39,7 @@ namespace ADOTestProject1
             int expected = 1;
             Assert.AreEqual(expected, actual);
         }
+        //Modify data
         [TestMethod]
         public void TestMethodToCheckModify()
         {
@@ -47,6 +49,17 @@ namespace ADOTestProject1
             addressBook.PhoneNumber = "7412369852";
             addressBook.email = "xyz@gmail.com";
             int actual = addressBookRepo.ModifyDetails(addressBook);
+            int expected = 1;
+            Assert.AreEqual(expected, actual);
+        }
+        //Delete the person
+        [TestMethod]
+        public void DeleteContact()
+        {
+            AddressBook addressBook = new AddressBook();
+            addressBook.FirstName = "Mohd";
+            addressBook.LastName = "Aadil";
+            int actual = addressBookRepo.DeletePerson(addressBook);
             int expected = 1;
             Assert.AreEqual(expected, actual);
         }
