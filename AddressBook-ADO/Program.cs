@@ -7,7 +7,9 @@ namespace AddressBook_ADO
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-          
+            AddressBookRepo addressBookRepo = new AddressBookRepo();
+            // addressBookRepo.AlterTable();
+            addressBookRepo.InsertIntoTablesForTRQuery();
         }
     }
 }

@@ -265,7 +265,6 @@ namespace AddressBook_ADO
         ////////////After ER////////////
         ///Tables are contact_list,address_book_type,contact_map_type
         ///
-        ///
         public AddressBook GetDetailAfterER(SqlDataReader sqlDataReader)
         {
 
@@ -358,7 +357,101 @@ namespace AddressBook_ADO
             return types;
 
         }
+        //////////Transaction//////////
+        ///Alter table executed only once
+        public void AlterTable()
+        {
+            using (sqlConnection)
+            {
+                sqlConnection.Open();
+                //begins sql transaction
+                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.Transaction = sqlTransaction;
+                try
+                {
+                    //performs the query
+                    sqlCommand.CommandText = "Alter table contact_list add date_added Date";
+                    sqlCommand.ExecuteNonQuery();
+                    //commits if all the above transactions are executed
+                    sqlTransaction.Commit();
+                    Console.WriteLine("All transaction are updated");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    //if any error roll backs to the last point
+                    sqlTransaction.Rollback();
+                }
+            }
+            sqlConnection.Close();
 
+        }
+        public string UpdateDateColumn()
+        {
+            string result = "Not Success";
+            using (sqlConnection)
+            {
+                sqlConnection.Open();
+                //begins sql transaction
+                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.Transaction = sqlTransaction;
+                try
+                {
+                    //performs the query
+                    sqlCommand.CommandText = "update contact_list set date_added = '2021-07-12' where FirstName = 'Ram' or FirstName = 'Amir'";
+                    sqlCommand.ExecuteNonQuery();
+                    sqlCommand.CommandText = "update contact_list set date_added = '2021-06-01' where FirstName = 'Dhanush' or FirstName = 'Uma'";
+                    sqlCommand.ExecuteNonQuery();
+                    //commits if all the above transactions are executed
+                    sqlTransaction.Commit();
+                    Console.WriteLine("All transaction are updated");
+                    result = "All transaction are updated";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    //if any error roll backs to the last point
+                    sqlTransaction.Rollback();
+                }
+            }
+            sqlConnection.Close();
+            return result;
+        }
+        public string InsertIntoTablesForTRQuery()
+        {
+            string update = "Not Successful";
+            using (sqlConnection)
+            {
+                sqlConnection.Open();
+                //begins sql transaction
+                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.Transaction = sqlTransaction;
+                try
+                {
+                    //performs the query
+                    sqlCommand.CommandText = "Insert into contact_list values ('Malik','hamsa','xxxx','yyyy','zzzz','Zip1234','7412036040','malikk@acu.in','Neighbour','2021-01-20')";
+                    sqlCommand.ExecuteScalar();
+                    sqlCommand.CommandText = "Insert into contact_map_type values('5','2')";
+                    sqlCommand.ExecuteNonQuery();
+                    //commits if all the above transactions are executed
+                    sqlTransaction.Commit();
+                    Console.WriteLine("All transaction are updated");
+                    update = "All transaction are updated";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    //if any error roll backs to the last point
+                    sqlTransaction.Rollback();
+                }
+            }
+            sqlConnection.Close();
 
+            return update;
+
+        }
     }
 }

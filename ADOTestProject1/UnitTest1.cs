@@ -134,6 +134,15 @@ namespace ADOTestProject1
             var expected = new List<int>(temp);
             CollectionAssert.AreEqual(actual, expected);
         }
+        //TestMethod to check values are updated into date column of every row
+        [TestMethod]
+        public void TestMethodForInsertDateColumn()
+        {
+            string actual = addressBookRepo.UpdateDateColumn();
+            string expected = "All transaction are updated";
+            Assert.AreEqual(actual,expected);
+        }
+       
 
     }
 }
