@@ -151,6 +151,7 @@ namespace ADOTestProject1
             var expected = new List<string>(temp);
             CollectionAssert.AreEqual(actual, expected);
         }
+        //insert into multiple table
         [TestMethod]
         public void InsertOnMultipleTableUsingTransaction()
         {
