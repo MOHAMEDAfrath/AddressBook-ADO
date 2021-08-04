@@ -142,6 +142,7 @@ namespace ADOTestProject1
             string expected = "All transaction are updated";
             Assert.AreEqual(actual,expected);
         }
+        //Test method to check the data  within date range
         [TestMethod]
         public void TestMethodForRetrieveDataBasedOnData()
         {
@@ -149,6 +150,13 @@ namespace ADOTestProject1
             string[] temp = { "Uma Devi","Dhanush Raj" };
             var expected = new List<string>(temp);
             CollectionAssert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void InsertOnMultipleTableUsingTransaction()
+        {
+            string actual = addressBookRepo.InsertIntoTablesForTRQuery();
+            string expected = "All transaction are updated";
+            Assert.AreEqual(actual, expected);
         }
        
 

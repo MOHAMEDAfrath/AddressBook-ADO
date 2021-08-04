@@ -438,5 +438,40 @@ namespace AddressBook_ADO
             }
             return addresses;
         }
+        public string InsertIntoTablesForTRQuery()
+        {
+            string update = "Not Successful";
+            using (sqlConnection)
+            {
+                sqlConnection.Open();
+                //begins sql transaction
+                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.Transaction = sqlTransaction;
+                try
+                {
+                    //performs the query
+                    sqlCommand.CommandText = "Insert into contact_list values ('Malik','hamsa','xxxx','yyyy','zzzz','Zip1234','7412036040','malikk@acu.in','Neighbour','2021-01-20')";
+                    sqlCommand.ExecuteScalar();
+                    sqlCommand.CommandText = "Insert into contact_map_type values('5','2')";
+                    sqlCommand.ExecuteNonQuery();
+                    //commits if all the above transactions are executed
+                    sqlTransaction.Commit();
+                    Console.WriteLine("All transaction are updated");
+                    update = "All transaction are updated";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    //if any error roll backs to the last point
+                    sqlTransaction.Rollback();
+                }
+            }
+            sqlConnection.Close();
+
+            return update;
+
+        }
+
     }
 }
