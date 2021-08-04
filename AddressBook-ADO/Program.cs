@@ -9,7 +9,7 @@ namespace AddressBook_ADO
             Console.WriteLine("Hello World!");
             AddressBookRepo addressBookRepo = new AddressBookRepo();
             // addressBookRepo.AlterTable();
-            addressBookRepo.InsertIntoTablesForTRQuery();
+            
         }
     }
 }

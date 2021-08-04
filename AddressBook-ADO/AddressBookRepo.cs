@@ -419,39 +419,24 @@ namespace AddressBook_ADO
             sqlConnection.Close();
             return result;
         }
-        public string InsertIntoTablesForTRQuery()
+        public List<string> RetrieveDataBasedOnDateRange()
         {
-            string update = "Not Successful";
+            List <string> addresses =  new List<string>();
             using (sqlConnection)
             {
+                //query execution
+                string query = @"select * from contact_list where date_added BETWEEN Cast('2021-06-01' as Date) and Cast('2021-07-03' as Date);";
+                SqlCommand command = new SqlCommand(query, this.sqlConnection);
+                //open sql connection
                 sqlConnection.Open();
-                //begins sql transaction
-                SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
-                SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                sqlCommand.Transaction = sqlTransaction;
-                try
+                SqlDataReader sqlDataReader = command.ExecuteReader();
+                if (sqlDataReader.HasRows)
                 {
-                    //performs the query
-                    sqlCommand.CommandText = "Insert into contact_list values ('Malik','hamsa','xxxx','yyyy','zzzz','Zip1234','7412036040','malikk@acu.in','Neighbour','2021-01-20')";
-                    sqlCommand.ExecuteScalar();
-                    sqlCommand.CommandText = "Insert into contact_map_type values('5','2')";
-                    sqlCommand.ExecuteNonQuery();
-                    //commits if all the above transactions are executed
-                    sqlTransaction.Commit();
-                    Console.WriteLine("All transaction are updated");
-                    update = "All transaction are updated";
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    //if any error roll backs to the last point
-                    sqlTransaction.Rollback();
+                    while(sqlDataReader.Read())
+                    addresses.Add(Convert.ToString(sqlDataReader[1]) +" "+Convert.ToString(sqlDataReader[2]));
                 }
             }
-            sqlConnection.Close();
-
-            return update;
-
+            return addresses;
         }
     }
 }

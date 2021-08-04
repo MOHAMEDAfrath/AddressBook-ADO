@@ -17,6 +17,7 @@ namespace AddressBook_ADO
         public string PhoneNumber { get; set; }
         public string email { get; set; }
         public string addressBookName { get; set; }
+        public DateTime date_added { get; set; }
         public string addressBookType { get; set; }
     }
 }

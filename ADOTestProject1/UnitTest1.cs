@@ -142,6 +142,14 @@ namespace ADOTestProject1
             string expected = "All transaction are updated";
             Assert.AreEqual(actual,expected);
         }
+        [TestMethod]
+        public void TestMethodForRetrieveDataBasedOnData()
+        {
+            List<string> actual = addressBookRepo.RetrieveDataBasedOnDateRange();
+            string[] temp = { "Uma Devi","Dhanush Raj" };
+            var expected = new List<string>(temp);
+            CollectionAssert.AreEqual(actual, expected);
+        }
        
 
     }
