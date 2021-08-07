@@ -31,8 +31,12 @@ namespace AddressBook_ADO
                     {
                         while (sqlDataReader.Read())
                         {
-                            eREmployeeModel = GetDetail(sqlDataReader);
-                            employeepayroll.Add(eREmployeeModel);
+                            Task thread = new Task(() =>
+                            {
+                                eREmployeeModel = GetDetail(sqlDataReader);
+                                employeepayroll.Add(eREmployeeModel);
+                            });
+                            thread.Start();
                         }
 
                     }
